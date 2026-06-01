@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Structural Humanism — Independent Investigative Project</title>
+<meta name="description" content="A public case against the systems that keep people confused, divided, indebted, and afraid. Documented. Structural. Verifiable. Actionable.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,800;1,500;1,700;1,800&family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   STRUCTURAL HUMANISM — Standalone HTML/CSS/JS
+   Art direction: noir investigative journalism
+   Palette: deep amber/oxblood/gold on near-black
+   Typography: Playfair Display (display) + Spectral (body) + Courier Prime (mono)
+   ============================================================ */
+
+:root {
+  --bg:         #0b0a08;
+  --bg2:        #131009;
+  --panel:      #16130d;
+  --panel2:     #1d1810;
+  --ink:        #e9e2d0;
+  --ink-dim:    #a89e86;
+  --ink-faint:  #6f6750;
+  --gold:       #caa04a;
+  --gold-b:     #e0b85e;
+  --oxblood:    #7c2c25;
+  --olive:      #5d6240;
+  --line:       #2c2618;
+  --line2:      #3a3320;
+  --mono:       'Courier Prime', 'Courier New', monospace;
+  --serif:      'Playfair Display', Georgia, serif;
+  --body:       'Spectral', Georgia, serif;
+
+  --text-xs:    clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm:    clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base:  clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg:    clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+  --text-xl:    clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+  --text-2xl:   clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+  --text-hero:  clamp(3rem, 0.5rem + 7vw, 7rem);
+
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+  --space-4: 1rem;    --space-5: 1.25rem; --space-6: 1.5rem;
+  --space-8: 2rem;    --space-10: 2.5rem; --space-12: 3rem;
+  --space-16: 4rem;   --space-20: 5rem;   --space-24: 6rem;
+
+  --radius-sm: 2px; --radius-md: 4px; --radius-lg: 6px;
+  --content-default: 1120px;
+  --content-narrow: 760px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { min-height: 100dvh; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: var(--text-base); line-height: 1.65; overflow-x: hidden; }
+img, video, svg { display: block; max-width: 100%; }
+button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+input, textarea, select { font: inherit; color: inherit; }
+h1,h2,h3,h4,h5,h6 { text-wrap: balance; line-height: 1.1; }
+p, li { text-wrap: pretty; }
+
+body::before {
+  content: "";
+  position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: .035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.wrap { max-width: var(--content-default); margin: 0 auto; padding: 0 var(--space-5); }
+
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  background: linear-gradient(180deg, rgba(8,7,5,.97), rgba(8,7,5,.88));
+  border-bottom: 1px solid var(--line2);
+  backdrop-filter: blur(8px);
+}
+.nav-brand { display: flex; align-items: center; gap: var(--space-3); cursor: pointer; }
+.nav-seal { width: 34px; height: 34px; color: var(--gold); flex: none; }
+.nav-title { font-family: var(--mono); font-weight: 700; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; line-height: 1.1; }
+.nav-sub { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--ink-faint); text-transform: uppercase; margin-top: 2px; }
+.nav-links { display: flex; gap: var(--space-1); }
+.nav-btn {
+  background: none; border: 1px solid transparent; color: var(--ink-dim);
+  font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); transition: .18s; white-space: nowrap;
+}
+.nav-btn:hover { color: var(--ink); background: var(--panel); }
+.nav-btn.active { color: var(--gold-b); border-color: var(--line2); background: var(--panel); }
+
+.eyebrow {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--gold); display: flex; align-items: center; gap: var(--space-4); margin-bottom: var(--space-6);
+}
+.eyebrow::before { content: ""; width: 42px; height: 1px; background: var(--gold); flex: none; }
+
+.page { display: none; }
+.page.active { display: block; }
+
+.hero {
+  position: relative; min-height: 90vh; display: flex; align-items: center; overflow: hidden;
+}
+.hero-bg { position: absolute; inset: 0; z-index: 0; }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; filter: grayscale(18%) contrast(1.08) brightness(.72); }
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(120% 90% at 18% 40%, rgba(11,10,8,.3), rgba(11,10,8,.94) 75%),
+    linear-gradient(90deg, rgba(11,10,8,.96) 0%, rgba(11,10,8,.5) 55%, rgba(11,10,8,.82) 100%);
+}
+.hero-inner {
+  position: relative; z-index: 2;
+  max-width: var(--content-default); margin: 0 auto; padding: var(--space-20) var(--space-5);
+  width: 100%;
+}
+.hero h2 {
+  font-family: var(--serif); font-weight: 800; line-height: .96; margin: 0 0 var(--space-6);
+  font-size: var(--text-hero); color: var(--ink); letter-spacing: -.01em;
+  text-shadow: 0 2px 40px rgba(0,0,0,.7);
+}
+.hero h2 em { font-style: italic; color: var(--gold-b); display: block; }
+.hero .lede {
+  font-size: clamp(17px, 2.2vw, 22px); line-height: 1.55; color: var(--ink-dim);
+  max-width: 580px; margin: 0 0 var(--space-10);
+}
+.cta-row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+
+.btn {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+  font-weight: 700; padding: 17px 30px; cursor: pointer; border: none; border-radius: var(--radius-sm);
+  display: inline-flex; align-items: center; gap: var(--space-3); transition: .2s;
+}
+.btn-gold { background: var(--gold); color: #1a1407; }
+.btn-gold:hover { background: var(--gold-b); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(202,160,74,.25); }
+.btn-ghost { background: rgba(20,17,11,.6); color: var(--ink-dim); border: 1px solid var(--line2); }
+.btn-ghost:hover { color: var(--ink); border-color: var(--gold); }
+
+.stamp {
+  display: inline-block; font-family: var(--mono); font-weight: 700; font-size: 12px;
+  letter-spacing: 3px; color: var(--oxblood); border: 2.5px solid var(--oxblood);
+  padding: 5px 14px; text-transform: uppercase; transform: rotate(-4deg); opacity: .85; border-radius: 3px;
+  margin-top: var(--space-10);
+}
+
+.mission { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: var(--space-12) 0; }
+.mission-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px; background: var(--line); }
+.mission-cell { background: var(--panel); padding: var(--space-8) var(--space-6); }
+.mission-cell .n { font-family: var(--mono); font-size: 11px; color: var(--gold); letter-spacing: 2px; }
+.mission-cell h4 { font-family: var(--serif); font-size: 22px; margin: var(--space-4) 0 var(--space-3); color: var(--ink); }
+.mission-cell p { font-size: 15px; line-height: 1.65; color: var(--ink-dim); }
+
+.quote-section { padding: var(--space-24) 0; text-align: center; }
+.quote-section blockquote {
+  font-family: var(--serif); font-style: italic; font-size: clamp(22px, 3.5vw, 38px);
+  line-height: 1.4; max-width: 860px; margin: 0 auto; color: var(--ink); font-weight: 500;
+}
+.quote-src { font-family: var(--mono); font-size: 11px; letter-spacing: 3px; color: var(--gold); margin-top: var(--space-6); }
+
+.desk-preview { padding: 0 0 var(--space-20); }
+.desk-frame { position: relative; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--line2); }
+.desk-frame img { width: 100%; display: block; filter: contrast(1.05) brightness(.78); }
+.desk-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(11,10,8,.88), rgba(11,10,8,.08) 58%, rgba(11,10,8,.55) 100%);
+  display: flex; align-items: flex-end; padding: clamp(20px,5vw,52px);
+}
+.desk-content { max-width: 480px; }
+.desk-content h3 {
+  font-family: var(--serif); font-weight: 800; font-size: clamp(26px,4vw,42px);
+  margin: var(--space-4) 0 var(--space-5); color: var(--ink);
+}
+
+.board { padding: var(--space-12) 0 var(--space-24); min-height: 90vh; }
+.board-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-8); }
+.board-title { font-family: var(--serif); font-size: clamp(30px,4vw,52px); font-weight: 800; color: var(--ink); }
+.board-controls { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin-bottom: var(--space-8); }
+.search-input {
+  background: var(--panel); border: 1px solid var(--line2); color: var(--ink);
+  font-family: var(--mono); font-size: 13px; padding: 11px 16px;
+  border-radius: var(--radius-sm); width: 260px; transition: .2s;
+}
+.search-input::placeholder { color: var(--ink-faint); }
+.search-input:focus { outline: none; border-color: var(--gold); }
+.filter-chip {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 8px 14px; border: 1px solid var(--line2); background: var(--panel);
+  color: var(--ink-dim); border-radius: var(--radius-sm); cursor: pointer; transition: .18s;
+}
+.filter-chip:hover { color: var(--ink); border-color: var(--ink-faint); }
+.filter-chip.on { color: var(--gold-b); border-color: var(--gold); background: rgba(202,160,74,.08); }
+
+.cases-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px,100%),1fr)); gap: var(--space-4); }
+.case-card {
+  background: var(--panel); border: 1px solid var(--line2); border-radius: var(--radius-md);
+  padding: var(--space-6); cursor: pointer; transition: .2s; position: relative;
+}
+.case-card:hover { border-color: var(--gold); box-shadow: 0 4px 24px rgba(202,160,74,.1); transform: translateY(-2px); }
+.case-id { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; color: var(--gold); }
+.case-cat { font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-faint); margin-top: 2px; }
+.case-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); margin: var(--space-3) 0 var(--space-2); line-height: 1.25; }
+.case-thesis { font-size: 14px; color: var(--ink-dim); line-height: 1.6; margin-bottom: var(--space-4); }
+.case-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.case-tag { font-family: var(--mono); font-size: 10px; color: var(--ink-faint); background: var(--bg2); border: 1px solid var(--line); padding: 3px 8px; border-radius: 2px; }
+.case-corner { position: absolute; top: var(--space-4); right: var(--space-4); font-family: var(--mono); font-size: 10px; color: var(--ink-faint); }
+
+.modal-bg { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,.88); align-items: center; justify-content: center; padding: var(--space-4); backdrop-filter: blur(4px); }
+.modal-bg.open { display: flex; }
+.modal {
+  background: var(--panel2); border: 1px solid var(--line2); border-radius: var(--radius-lg);
+  max-width: 720px; width: 100%; max-height: 88vh; overflow-y: auto;
+  padding: var(--space-8); position: relative;
+}
+.modal-close {
+  position: absolute; top: var(--space-4); right: var(--space-4);
+  width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  background: var(--panel); color: var(--ink-dim); font-size: 20px;
+  border: 1px solid var(--line2); transition: .18s;
+}
+.modal-close:hover { color: var(--ink); border-color: var(--ink-faint); }
+.modal h2 { font-family: var(--serif); font-size: 30px; font-weight: 800; color: var(--ink); margin: var(--space-4) 0 var(--space-4); }
+.modal-section { margin-bottom: var(--space-6); }
+.modal-section h4 { font-family: var(--mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: var(--space-3); }
+.modal-section p { font-size: 15px; color: var(--ink-dim); line-height: 1.7; }
+.modal-evidence { list-style: none; }
+.modal-evidence li { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); padding: var(--space-2) 0; border-bottom: 1px solid var(--line); display: flex; gap: var(--space-3); align-items: center; }
+.modal-evidence li::before { content: "—"; color: var(--gold); }
+
+.archive-strip { background: var(--bg2); border-top: 1px solid var(--line); padding: var(--space-12) 0; margin-top: var(--space-12); }
+.archive-inner { display: flex; flex-wrap: wrap; gap: var(--space-6); align-items: center; justify-content: space-between; }
+.archive-inner p { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); max-width: 520px; line-height: 1.7; }
+
+.act { padding: var(--space-12) 0 var(--space-24); min-height: 90vh; }
+.act-title { font-family: var(--serif); font-size: clamp(30px,4vw,52px); font-weight: 800; color: var(--ink); margin-bottom: var(--space-4); }
+.act-lede { font-size: 17px; color: var(--ink-dim); max-width: 620px; margin-bottom: var(--space-10); }
+.act-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px,100%),1fr)); gap: var(--space-4); margin-bottom: var(--space-16); }
+.act-tile {
+  background: var(--panel); border: 1px solid var(--line2); border-radius: var(--radius-md);
+  padding: var(--space-6); transition: .2s;
+}
+.act-tile:hover { border-color: var(--gold); }
+.act-tile .t { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: var(--space-4); }
+.act-tile h4 { font-family: var(--serif); font-size: 20px; color: var(--ink); margin-bottom: var(--space-2); }
+.act-tile p { font-size: 14px; color: var(--ink-dim); margin-bottom: var(--space-5); }
+.act-tile a { font-family: var(--mono); font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold-b); text-decoration: none; }
+.act-tile a:hover { text-decoration: underline; }
+
+.foia-section { background: var(--bg2); border: 1px solid var(--line2); border-radius: var(--radius-md); padding: var(--space-8); margin-bottom: var(--space-12); }
+.foia-section h3 { font-family: var(--serif); font-size: 24px; font-weight: 800; color: var(--ink); margin-bottom: var(--space-2); }
+.foia-section .desc { font-size: 14px; color: var(--ink-dim); margin-bottom: var(--space-6); }
+.foia-form { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-6); }
+.foia-field { display: flex; flex-direction: column; gap: var(--space-2); }
+.foia-field.full { grid-column: 1 / -1; }
+.foia-field label { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+.foia-field input, .foia-field textarea {
+  background: var(--panel); border: 1px solid var(--line2); color: var(--ink);
+  font-family: var(--mono); font-size: 13px; padding: 11px 14px; border-radius: var(--radius-sm); resize: vertical;
+}
+.foia-field input:focus, .foia-field textarea:focus { outline: none; border-color: var(--gold); }
+.foia-output {
+  background: var(--bg); border: 1px solid var(--line2); border-radius: var(--radius-sm);
+  padding: var(--space-5); font-family: var(--mono); font-size: 13px; color: var(--ink-dim);
+  line-height: 1.75; white-space: pre-wrap; min-height: 200px; margin-bottom: var(--space-4);
+  max-height: 360px; overflow-y: auto;
+}
+.foia-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+.contact-section { border-top: 1px solid var(--line); padding-top: var(--space-12); }
+.contact-section h3 { font-family: var(--serif); font-size: 24px; font-weight: 800; color: var(--ink); margin-bottom: var(--space-2); }
+.contact-section p { font-size: 14px; color: var(--ink-dim); margin-bottom: var(--space-6); }
+.contact-form { display: flex; flex-direction: column; gap: var(--space-4); max-width: 560px; }
+.cf-field { display: flex; flex-direction: column; gap: var(--space-2); }
+.cf-field label { font-family: var(--mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+.cf-field input, .cf-field textarea {
+  background: var(--panel); border: 1px solid var(--line2); color: var(--ink);
+  font-family: var(--mono); font-size: 13px; padding: 11px 14px; border-radius: var(--radius-sm); resize: vertical;
+}
+.cf-field input:focus, .cf-field textarea:focus { outline: none; border-color: var(--gold); }
+
+footer {
+  background: var(--bg2); border-top: 1px solid var(--line);
+  padding: var(--space-8) var(--space-5); text-align: center;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 2px; color: var(--ink-faint);
+}
+
+@media (max-width: 680px) {
+  .nav-links { gap: 0; }
+  .nav-btn { padding: var(--space-2) var(--space-2); font-size: 9px; }
+  .hero h2 { font-size: clamp(2.4rem, 10vw, 4rem); }
+  .foia-form { grid-template-columns: 1fr; }
+  .foia-field.full { grid-column: 1; }
+  .board-head { flex-direction: column; align-items: flex-start; }
+  .desk-overlay { padding: var(--space-4); }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand" onclick="showPage('home')">
+    <svg class="nav-seal" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Structural Humanism seal">
+      <circle cx="17" cy="17" r="15.5" stroke="currentColor" stroke-width="1.2"/>
+      <circle cx="17" cy="17" r="11.5" stroke="currentColor" stroke-width=".7" stroke-dasharray="2 2.5"/>
+      <path d="M17 7v20M7 17h20" stroke="currentColor" stroke-width="1"/>
+      <circle cx="17" cy="17" r="2.5" fill="currentColor"/>
+      <path d="M11 11l12 12M23 11L11 23" stroke="currentColor" stroke-width=".6" opacity=".5"/>
+    </svg>
+    <div>
+      <div class="nav-title">Structural Humanism</div>
+      <div class="nav-sub">Independent Investigation</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('home')" id="nav-home">Home</button>
+    <button class="nav-btn" onclick="showPage('board')" id="nav-board">Evidence Board</button>
+    <button class="nav-btn" onclick="showPage('act')" id="nav-act">Act</button>
+  </div>
+</nav>
+
+<!-- ============================================================ PAGE 1: HOME -->
+<section class="page active" id="page-home">
+
+  <div class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1600&q=80&auto=format&fit=crop" alt="Man silhouette at desk noir scene" width="1600" height="900" loading="eager">
+    </div>
+    <div class="hero-inner">
+      <div class="eyebrow">Case File Open</div>
+      <h2>A Public Case<br><em>Against the Systems.</em></h2>
+      <p class="lede">The confusion, the debt, the division, the fear — these are not accidents. They are products of systems built to perpetuate themselves. We document them. You decide what to do with it.</p>
+      <div class="cta-row">
+        <button class="btn btn-gold" onclick="showPage('board')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+          Open Evidence Board
+        </button>
+        <button class="btn btn-ghost" onclick="showPage('act')">Take Action</button>
+      </div>
+      <div class="stamp">Documented · Verifiable</div>
+    </div>
+  </div>
+
+  <div class="mission">
+    <div class="wrap">
+      <div class="mission-grid">
+        <div class="mission-cell">
+          <div class="n">01 / Principle</div>
+          <h4>Documented</h4>
+          <p>Every claim is sourced. Every case file cites primary records, public data, and verifiable institutional history — not opinion.</p>
+        </div>
+        <div class="mission-cell">
+          <div class="n">02 / Method</div>
+          <h4>Structural</h4>
+          <p>We don't chase individuals. We expose systems — the incentive structures, policy architectures, and feedback loops that produce harm at scale.</p>
+        </div>
+        <div class="mission-cell">
+          <div class="n">03 / Standard</div>
+          <h4>Verifiable</h4>
+          <p>All source material is public record. FOIA requests, Congressional records, academic studies, government databases. Anyone can confirm.</p>
+        </div>
+        <div class="mission-cell">
+          <div class="n">04 / Goal</div>
+          <h4>Actionable</h4>
+          <p>Understanding without action is just frustration. Every case file ends with a concrete path — who to contact, what to file, what to demand.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="quote-section">
+    <div class="wrap">
+      <div class="eyebrow" style="justify-content:center;">Guiding Principle</div>
+      <blockquote>"The system cannot fail us. It can only fail to be what we were told it was. The difference is everything."</blockquote>
+      <div class="quote-src">— Structural Humanism, Case Zero</div>
+    </div>
+  </div>
+
+  <div class="desk-preview">
+    <div class="wrap">
+      <div class="desk-frame">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1400&q=80&auto=format&fit=crop" alt="Investigative desk with documents and lamp" width="1400" height="600" loading="lazy">
+        <div class="desk-overlay">
+          <div class="desk-content">
+            <div class="eyebrow">The Work</div>
+            <h3>Nine cases. Nine systems. All connected.</h3>
+            <p style="font-size:15px; color:var(--ink-dim); margin-bottom:var(--space-6); line-height:1.65;">From healthcare billing to media consolidation, the evidence board maps how power concentrates and public interest erodes — case by case.</p>
+            <button class="btn btn-gold" onclick="showPage('board')">Enter the Evidence Board</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================================ PAGE 2: EVIDENCE BOARD -->
+<section class="page" id="page-board">
+  <div class="board">
+    <div class="wrap">
+      <div class="eyebrow">Evidence Board</div>
+      <div class="board-head">
+        <h2 class="board-title">Open Case Files</h2>
+      </div>
+      <div class="board-controls">
+        <input type="text" class="search-input" id="caseSearch" placeholder="Search cases..." oninput="filterCases()">
+        <button class="filter-chip on" onclick="setFilter('all',this)">All</button>
+        <button class="filter-chip" onclick="setFilter('finance',this)">Finance</button>
+        <button class="filter-chip" onclick="setFilter('health',this)">Health</button>
+        <button class="filter-chip" onclick="setFilter('media',this)">Media</button>
+        <button class="filter-chip" onclick="setFilter('housing',this)">Housing</button>
+        <button class="filter-chip" onclick="setFilter('labor',this)">Labor</button>
+        <button class="filter-chip" onclick="setFilter('education',this)">Education</button>
+      </div>
+      <div class="cases-grid" id="casesGrid"></div>
+    </div>
+  </div>
+
+  <div class="archive-strip">
+    <div class="wrap">
+      <div class="archive-inner">
+        <p>All case files are compiled from public record sources: FOIA releases, Congressional Research Service reports, GAO audits, SEC filings, academic peer review, and government statistical databases. No anonymous sourcing. No speculation.</p>
+        <button class="btn btn-ghost" onclick="showPage('act')">File Your Own FOIA →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ PAGE 3: ACT -->
+<section class="page" id="page-act">
+  <div class="act">
+    <div class="wrap">
+      <div class="eyebrow">Take Action</div>
+      <h2 class="act-title">Turn Evidence Into Demand</h2>
+      <p class="act-lede">The record is public. The tools are available. Here is how to use them — from FOIA requests to direct congressional contact.</p>
+
+      <div class="act-grid">
+        <div class="act-tile">
+          <div class="t">Tool 01</div>
+          <h4>FOIA Generator</h4>
+          <p>Build a properly formatted Freedom of Information Act request for any federal agency below.</p>
+          <a href="#foia-gen">Use below ↓</a>
+        </div>
+        <div class="act-tile">
+          <div class="t">Tool 02</div>
+          <h4>OpenSecrets</h4>
+          <p>Track campaign contributions and lobbying expenditures by industry and legislator.</p>
+          <a href="https://www.opensecrets.org" target="_blank" rel="noopener noreferrer">opensecrets.org →</a>
+        </div>
+        <div class="act-tile">
+          <div class="t">Tool 03</div>
+          <h4>Contact Congress</h4>
+          <p>Find your representatives and send direct messages to their official offices.</p>
+          <a href="https://www.congress.gov/members/find-your-member" target="_blank" rel="noopener noreferrer">congress.gov →</a>
+        </div>
+        <div class="act-tile">
+          <div class="t">Tool 04</div>
+          <h4>National Archives</h4>
+          <p>Access federal records, declassified documents, and historical government files.</p>
+          <a href="https://www.archives.gov" target="_blank" rel="noopener noreferrer">archives.gov →</a>
+        </div>
+      </div>
+
+      <div class="foia-section" id="foia-gen">
+        <h3>FOIA Request Generator</h3>
+        <p class="desc">Fill in the fields below. A properly formatted FOIA request will be generated using the statutory language required under 5 U.S.C. § 552.</p>
+        <div class="foia-form">
+          <div class="foia-field">
+            <label>Agency Name</label>
+            <input type="text" id="foiaAgency" placeholder="e.g. Department of Health and Human Services">
+          </div>
+          <div class="foia-field">
+            <label>FOIA Officer / Office</label>
+            <input type="text" id="foiaOfficer" placeholder="e.g. FOIA Officer, Office of the Secretary">
+          </div>
+          <div class="foia-field full">
+            <label>Records Requested</label>
+            <textarea id="foiaRecords" rows="3" placeholder="Describe the specific records you are requesting..."></textarea>
+          </div>
+          <div class="foia-field full">
+            <label>Justification / Public Interest Statement</label>
+            <textarea id="foiaJustification" rows="2" placeholder="Explain the public interest purpose of this request..."></textarea>
+          </div>
+          <div class="foia-field">
+            <label>Your Name</label>
+            <input type="text" id="foiaName" placeholder="Full Name">
+          </div>
+          <div class="foia-field">
+            <label>Your Address</label>
+            <input type="text" id="foiaAddress" placeholder="City, State, ZIP">
+          </div>
+        </div>
+        <div class="foia-actions" style="margin-bottom:var(--space-5)">
+          <button class="btn btn-gold" onclick="generateFOIA()">Generate Letter</button>
+          <button class="btn btn-ghost" onclick="clearFOIA()">Clear</button>
+        </div>
+        <div class="foia-output" id="foiaOutput">Fill in the fields above and click Generate Letter to produce your FOIA request.</div>
+        <div class="foia-actions">
+          <button class="btn btn-ghost" onclick="copyFOIA()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy to Clipboard
+          </button>
+        </div>
+      </div>
+
+      <div class="contact-section">
+        <h3>Submit a Tip or Source</h3>
+        <p>If you have documentation, records, or firsthand knowledge of systemic patterns described in any case file, use the form below.</p>
+        <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="cf-field">
+            <label>Subject</label>
+            <input type="text" name="subject" placeholder="Which case file or system does this relate to?">
+          </div>
+          <div class="cf-field">
+            <label>Message</label>
+            <textarea name="message" rows="5" placeholder="Describe what you know, what you have, or what you've witnessed..."></textarea>
+          </div>
+          <div class="cf-field">
+            <label>Contact (optional)</label>
+            <input type="email" name="email" placeholder="Email if you'd like a response">
+          </div>
+          <button type="submit" class="btn btn-gold" style="align-self:flex-start">Submit Tip</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-bg" id="caseModal" onclick="closeModal(event)">
+  <div class="modal" id="modalContent">
+    <button class="modal-close" onclick="closeModalDirect()" aria-label="Close">&times;</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Structural Humanism &nbsp;·&nbsp; All source material is public record &nbsp;·&nbsp; Independent &amp; Unfunded
+</footer>
+
+<script>
+const CASES = [
+  {
+    id:"SH-001", cat:"finance", title:"The Debt Trap Architecture",
+    thesis:"Consumer debt systems are designed to perpetuate indebtedness, not resolve it.",
+    summary:"The American consumer credit system — from credit cards to payday loans — is structured so that minimum payments generate maximum interest over maximum time. The Federal Reserve's own data shows median credit card APR has exceeded 20% while the federal funds rate hovered near zero for a decade. Regulatory capture of the CFPB by industry-aligned appointees has systematically weakened disclosure requirements.",
+    evidence:["Federal Reserve Consumer Credit Report G.19","CFPB Supervisory Highlights 2019–2023","National Consumer Law Center: Payday Loan Rate Analysis","12 U.S.C. § 5491 — CFPB Enabling Statute vs. actual enforcement record"]
+  },
+  {
+    id:"SH-002", cat:"health", title:"The Billing Labyrinth",
+    thesis:"Healthcare billing complexity is a profit mechanism, not an administrative necessity.",
+    summary:"The United States spends 34.2% of total healthcare expenditures on administrative costs — more than twice the OECD average. This complexity is not incidental. It serves as a barrier to claims, a negotiating tool against uninsured patients, and a revenue center for billing software vendors with deep lobbying ties to the AHA and AMA. Chargemaster prices bear no relationship to actual cost.",
+    evidence:["NEJM: Administrative Costs in US Health Care (2019)","GAO Report: Hospital Billing Practices GAO-12-964","CMS Chargemaster Data 2020–2023","AHA Lobbying Expenditure Records via OpenSecrets"]
+  },
+  {
+    id:"SH-003", cat:"media", title:"Consolidation and the Narrowing of Record",
+    thesis:"Six corporations controlling 90% of US media is a structural threat to informed democracy.",
+    summary:"In 1983, 50 companies controlled the majority of US media. By 2012 that number was six. The FCC's relaxation of cross-ownership rules — repeatedly lobbied for by the same companies subject to the rules — has accelerated consolidation. Local newsrooms have been systematically acquired and stripped. The result is not diverse viewpoints but the illusion of them: the same wire content repackaged across hundreds of mastheads.",
+    evidence:["FCC Cross-Ownership Rule History 1975–2018","Columbia Journalism Review: News Desert Mapping Project","Pew Research: State of the News Media 2023","FCC Lobbying Records: Nexstar, Sinclair, iHeart 2015–2022"]
+  },
+  {
+    id:"SH-004", cat:"housing", title:"The Zoning Capture",
+    thesis:"Single-family zoning is an exclusionary policy tool masquerading as neighborhood preservation.",
+    summary:"Approximately 75% of residential land in major US cities is zoned exclusively for single-family homes. This is not a natural outcome of market preference — it is the product of explicit policy decisions made in the 1920s–1950s, many explicitly designed to maintain racial and economic segregation. The persistence of these codes, defended by incumbent homeowners with the highest voter turnout in local elections, has created an artificial scarcity that functions as a wealth transfer from renters to existing owners.",
+    evidence:["UC Berkeley Othering & Belonging Institute: Racial Segregation Zoning Study","Richard Rothstein: The Color of Law (2017) — historical documentation","Urban Land Institute: Zoning Reform Tracker 2022","NLIHC: The Gap Report 2023"]
+  },
+  {
+    id:"SH-005", cat:"labor", title:"The Wage Theft Asymmetry",
+    thesis:"Wage theft dwarfs all other forms of theft in the United States but receives a fraction of the enforcement.",
+    summary:"The Economic Policy Institute estimates that wage theft — unpaid overtime, minimum wage violations, off-the-clock work requirements — costs workers $50 billion annually. By comparison, all robbery, burglary, larceny, and motor vehicle theft combined totals approximately $16 billion. Yet the Department of Labor's Wage and Hour Division employs fewer investigators today than it did in 1948, and civil penalties for wage violations remain capped at levels last updated decades ago.",
+    evidence:["Economic Policy Institute: Wage Theft in America (2014, updated 2021)","DOL Wage and Hour Division Enforcement Data FY2000–2023","FBI UCR Property Crime Statistics 2022","Senate HELP Committee: Wage Theft Hearing Testimony 2019"]
+  },
+  {
+    id:"SH-006", cat:"education", title:"The Student Debt Mechanism",
+    thesis:"The federal student loan system transfers wealth upward while suppressing intergenerational mobility.",
+    summary:"Federal student loan programs were originally designed as needs-based grants. The shift to loan-dependent financing coincided with the defunding of public higher education at the state level — a defunding driven by the same tax limitation movements that reduced the broader public investment base. The result: students borrow against future income to subsidize state tax cuts, then pay that debt in a labor market where credential inflation has reduced the wage premium of the degrees they were told to purchase.",
+    evidence:["Federal Reserve Bank of New York: College Labor Market Data","State Higher Education Finance Study: SHEF Annual Report","College Board: Trends in Student Aid 2022","GAO: Federal Student Loan Portfolio Analysis 2023"]
+  },
+  {
+    id:"SH-007", cat:"finance", title:"The Revolving Door Index",
+    thesis:"Regulatory agency staffing patterns systematically favor industry over public interest.",
+    summary:"An analysis of SEC, FDA, FCC, and CFPB leadership appointments from 2000–2022 shows that a majority of senior officials either came directly from regulated industries or moved to industry positions within 24 months of departure. This is not corruption in the legal sense — it is the designed outcome of a system where industry expertise is the stated credential for regulatory office, and regulatory relationships are the stated credential for industry employment.",
+    evidence:["Project on Government Oversight: Revolving Door Database","SEC Ethics Office Annual Reports 2010–2022","FDA: Post-Government Employment Restrictions Documentation","OMB Circular A-123 vs. actual enforcement patterns"]
+  },
+  {
+    id:"SH-008", cat:"health", title:"The Pharmaceutical Pricing Architecture",
+    thesis:"US drug prices are not set by development costs or market competition — they are set by the absence of negotiation authority.",
+    summary:"The Medicare Prescription Drug, Improvement, and Modernization Act of 2003 explicitly prohibits Medicare from negotiating drug prices — the largest single purchaser of pharmaceuticals in the world. The VA, which is permitted to negotiate, pays 40–58% less for the same drugs. The non-interference clause was written by a congressional staffer who became the PhRMA's chief lobbyist two years after passage. This is documented in public record.",
+    evidence:["CRS Report: Medicare Drug Price Negotiation — History and Status","VA Pharmaceutical Prime Vendor Program Pricing Data","PhRMA Lobbying Expenditure Records 1998–2023","Billy Tauzin Congressional Record and post-service employment documentation"]
+  },
+  {
+    id:"SH-009", cat:"labor", title:"The Noncompete Suppression System",
+    thesis:"Noncompete agreements in low-wage sectors suppress wages and geographic mobility with no corresponding innovation benefit.",
+    summary:"Noncompete agreements — once reserved for executives with genuine trade secret access — are now routinely imposed on sandwich makers, security guards, and hourly retail workers in 47 states. The FTC's own economic analysis estimates these agreements suppress wages by $296 billion annually for affected workers. They also prevent workers from using the threat of departure as wage leverage — the only meaningful bargaining tool available to those without union representation.",
+    evidence:["FTC: Noncompete Clause Rulemaking Economic Analysis 2023","Treasury Department: Non-Compete Contracts and the American Worker (2016)","Economic Policy Institute: Noncompetes in the Workplace 2019","State enforcement data: IL, CA, ND vs. TX, FL comparison"]
+  }
+];
+
+let activeFilter = 'all';
+
+function renderCases() {
+  const q = document.getElementById('caseSearch').value.toLowerCase();
+  const grid = document.getElementById('casesGrid');
+  const filtered = CASES.filter(c => {
+    const matchCat = activeFilter === 'all' || c.cat === activeFilter;
+    const matchQ = !q || c.title.toLowerCase().includes(q) || c.thesis.toLowerCase().includes(q) || c.summary.toLowerCase().includes(q) || c.evidence.join(' ').toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+  grid.innerHTML = filtered.length ? filtered.map((c,i) => `
+    <div class="case-card" onclick="openCase(${CASES.indexOf(c)})" tabindex="0" role="button" aria-label="Open case ${c.id}">
+      <div class="case-corner">${c.evidence.length} sources</div>
+      <div class="case-id">${c.id}</div>
+      <div class="case-cat">${c.cat}</div>
+      <h3 class="case-title">${c.title}</h3>
+      <p class="case-thesis">${c.thesis}</p>
+      <div class="case-tags">${c.evidence.slice(0,3).map(e => `<span class="case-tag">${e.split(':')[0].trim()}</span>`).join('')}</div>
+    </div>`).join('') :
+    `<div style="grid-column:1/-1;text-align:center;padding:var(--space-16);color:var(--ink-faint);font-family:var(--mono);font-size:13px;">No cases match your search.</div>`;
+}
+
+function filterCases() { renderCases(); }
+function setFilter(f, el) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  renderCases();
+}
+
+function openCase(idx) {
+  const c = CASES[idx];
+  document.getElementById('modalBody').innerHTML = `
+    <div class="case-id" style="font-size:13px">${c.id} &nbsp;·&nbsp; ${c.cat.toUpperCase()}</div>
+    <h2>${c.title}</h2>
+    <div class="modal-section">
+      <h4>Thesis</h4>
+      <p style="font-style:italic;color:var(--ink)">${c.thesis}</p>
+    </div>
+    <div class="modal-section">
+      <h4>Summary</h4>
+      <p>${c.summary}</p>
+    </div>
+    <div class="modal-section">
+      <h4>Evidence Sources</h4>
+      <ul class="modal-evidence">${c.evidence.map(e=>`<li>${e}</li>`).join('')}</ul>
+    </div>
+    <div style="margin-top:var(--space-6)">
+      <button class="btn btn-gold" onclick="showPage('act');closeModalDirect()">Take Action on This Case</button>
+    </div>`;
+  document.getElementById('caseModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) { if(e.target === document.getElementById('caseModal')) closeModalDirect(); }
+function closeModalDirect() {
+  document.getElementById('caseModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModalDirect(); });
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('nav-'+name).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(name==='board') renderCases();
+}
+
+function generateFOIA() {
+  const agency = document.getElementById('foiaAgency').value || '[AGENCY NAME]';
+  const officer = document.getElementById('foiaOfficer').value || 'FOIA Officer';
+  const records = document.getElementById('foiaRecords').value || '[DESCRIBE RECORDS REQUESTED]';
+  const justification = document.getElementById('foiaJustification').value || '[PUBLIC INTEREST JUSTIFICATION]';
+  const name = document.getElementById('foiaName').value || '[YOUR NAME]';
+  const address = document.getElementById('foiaAddress').value || '[YOUR ADDRESS]';
+  const today = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
+  const letter = `${today}
+
+${officer}
+${agency}
+Via: FOIA Request Portal / Certified Mail
+
+RE: Freedom of Information Act Request — 5 U.S.C. § 552
+
+Dear FOIA Officer:
+
+Pursuant to the Freedom of Information Act, 5 U.S.C. § 552, I hereby request the following records from ${agency}:
+
+${records}
+
+PUBLIC INTEREST STATEMENT:
+${justification}
+
+This request is being made in the public interest. I request a fee waiver pursuant to 5 U.S.C. § 552(a)(4)(A)(iii) on the grounds that disclosure of the requested information is in the public interest, is likely to contribute significantly to public understanding of the operations or activities of the government, and is not primarily in my commercial interest.
+
+In the event that a fee waiver is not granted, I request that fees be limited to duplication costs only and that I be notified before any fees exceeding $25.00 are assessed.
+
+If any portion of this request is denied, I request that the remaining responsive records be provided. Please identify which specific exemption(s) under 5 U.S.C. § 552(b) you are claiming for any withheld material, and state whether a redacted version can be provided in lieu of full withholding.
+
+I expect a response within twenty (20) business days as required by 5 U.S.C. § 552(a)(6)(A)(i). If you require any clarification regarding this request, please contact me at the address below.
+
+Sincerely,
+
+${name}
+${address}
+
+---
+This request was generated using the Structural Humanism FOIA Tool.
+All statutory language references: 5 U.S.C. § 552 (FOIA) and 5 U.S.C. § 552a (Privacy Act).`;
+
+  document.getElementById('foiaOutput').textContent = letter;
+}
+
+function clearFOIA() {
+  ['foiaAgency','foiaOfficer','foiaRecords','foiaJustification','foiaName','foiaAddress'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('foiaOutput').textContent = 'Fill in the fields above and click Generate Letter to produce your FOIA request.';
+}
+
+function copyFOIA() {
+  const text = document.getElementById('foiaOutput').textContent;
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.foia-actions .btn-ghost');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copied';
+      setTimeout(() => btn.innerHTML = orig, 2000);
+    });
+  }
+}
+
+renderCases();
+</script>
+</body>
+</html>
